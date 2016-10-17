@@ -1,14 +1,10 @@
 module Orthographer
   class MissResult < Result
     def to_s
-      "(#{line}, #{character}) #{original}: #{options}"
+      "(#{@line}, #{character}) #{original}: #{options}"
     end
 
     private
-
-    def line
-      @line
-    end
 
     def character
       @feedback.gsub(/:/, '').split(' ')[3]
