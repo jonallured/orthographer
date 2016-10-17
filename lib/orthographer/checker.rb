@@ -36,12 +36,7 @@ module Orthographer
     end
   end
 
-  class MissResult
-    def initialize(feedback, line)
-      @feedback = feedback
-      @line = line
-    end
-
+  class MissResult < Result
     def to_s
       "(#{line}, #{character}) #{original}: #{options}"
     end
@@ -65,12 +60,7 @@ module Orthographer
     end
   end
 
-  class NoneResult
-    def initialize(feedback, line)
-      @feedback = feedback
-      @line = line
-    end
-
+  class NoneResult < Result
     def to_s
       "(#{line}, #{character}) #{original}"
     end

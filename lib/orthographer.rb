@@ -1,3 +1,4 @@
+require "orthographer/result"
 require "orthographer/checker"
 require "orthographer/version"
 
