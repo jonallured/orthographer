@@ -1,4 +1,6 @@
 require "orthographer/result"
+require "orthographer/miss_result"
+require "orthographer/none_result"
 require "orthographer/checker"
 require "orthographer/version"
 
