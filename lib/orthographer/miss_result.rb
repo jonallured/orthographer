@@ -1,17 +1,21 @@
 module Orthographer
   class MissResult < Result
     def to_s
-      "(#{@line}, #{character}) #{original}: #{options}"
+      "(#{@line}, #{offset}) #{original}: #{options}"
     end
 
     private
 
-    def character
-      @feedback.gsub(/:/, '').split(' ')[3]
+    def splitted_feedback
+      @splitted_feedback ||= @feedback.gsub(/:/, '').split ' '
+    end
+
+    def offset
+      splitted_feedback[3]
     end
 
     def original
-      @feedback.split(' ')[1]
+      splitted_feedback[1]
     end
 
     def options

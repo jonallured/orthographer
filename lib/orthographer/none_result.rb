@@ -1,17 +1,21 @@
 module Orthographer
   class NoneResult < Result
     def to_s
-      "(#{@line}, #{character}) #{original}"
+      "(#{@line}, #{offset}) #{original}"
     end
 
     private
 
-    def character
-      @feedback.gsub(/:/, '').split(' ')[3]
+    def splitted_feedback
+      @splitted_feedback ||= @feedback.split ' '
+    end
+
+    def offset
+      splitted_feedback[2]
     end
 
     def original
-      @feedback.split(' ')[1]
+      splitted_feedback[1]
     end
   end
 end
