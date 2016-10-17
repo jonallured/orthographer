@@ -5,7 +5,9 @@ describe Orthographer do
     expect(Orthographer::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it 'finds a spelling mistake' do
+    text = 'rong'
+    misspellings = Orthographer.check text
+    expect(misspellings.count).to eq 1
   end
 end

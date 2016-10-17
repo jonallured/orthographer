@@ -1,5 +1,8 @@
+require "orthographer/checker"
 require "orthographer/version"
 
 module Orthographer
-  # Your code goes here...
+  def self.check(text)
+    Checker.check(text)
+  end
 end
