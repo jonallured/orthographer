@@ -27,14 +27,16 @@ module Orthographer
         word_feedback = feedback.split("\n")
         word_feedback.map do |word|
           if word[0] == "&"
-            Misspelling.new(word, index + 1)
+            MissResult.new(word, index + 1)
+          elsif word[0] == "#"
+            NoneResult.new(word, index + 1)
           end
         end
       end
     end
   end
 
-  class Misspelling
+  class MissResult
     def initialize(feedback, line)
       @feedback = feedback
       @line = line
@@ -60,6 +62,31 @@ module Orthographer
 
     def options
       @feedback.split(': ').last
+    end
+  end
+
+  class NoneResult
+    def initialize(feedback, line)
+      @feedback = feedback
+      @line = line
+    end
+
+    def to_s
+      "(#{line}, #{character}) #{original}"
+    end
+
+    private
+
+    def line
+      @line
+    end
+
+    def character
+      @feedback.gsub(/:/, '').split(' ')[3]
+    end
+
+    def original
+      @feedback.split(' ')[1]
     end
   end
 end
