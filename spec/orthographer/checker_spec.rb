@@ -38,6 +38,46 @@ module Orthographer
           expect(misspellings.count).to eq 2
         end
       end
+
+      context 'with two lines' do
+        it 'returns correct coordinates' do
+          text = "rong\nwut"
+          misspellings = Checker.check(text)
+          first, last = *misspellings
+          expect(first.coordinates).to eq '(1, 0)'
+          expect(last.coordinates).to eq '(2, 0)'
+        end
+      end
+
+      context 'with two empty lines' do
+        it 'returns correct coordinates' do
+          text = "rong\n\nwut"
+          misspellings = Checker.check(text)
+          first, last = *misspellings
+          expect(first.coordinates).to eq '(1, 0)'
+          expect(last.coordinates).to eq '(3, 0)'
+        end
+      end
+
+      context 'with three empty lines' do
+        it 'returns correct coordinates' do
+          text = "rong\n\n\nwut"
+          misspellings = Checker.check(text)
+          first, last = *misspellings
+          expect(first.coordinates).to eq '(1, 0)'
+          expect(last.coordinates).to eq '(4, 0)'
+        end
+      end
+
+      context 'with 10 empty lines' do
+        it 'returns correct coordinates' do
+          text = "rong\n\n\n\n\n\n\n\n\n\nwut"
+          misspellings = Checker.check(text)
+          first, last = *misspellings
+          expect(first.coordinates).to eq '(1, 0)'
+          expect(last.coordinates).to eq '(11, 0)'
+        end
+      end
     end
   end
 end

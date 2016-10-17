@@ -9,11 +9,11 @@ module Orthographer
       "#{coordinates} #{original}"
     end
 
-    private
-
     def coordinates
       "(#{@line}, #{offset})"
     end
+
+    private
 
     def offset
       raise 'Implement in subclass'

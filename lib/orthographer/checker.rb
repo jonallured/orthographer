@@ -15,11 +15,14 @@ module Orthographer
     private
 
     def output
-      @output ||= `echo #{@text} | hunspell -a`
+      @output ||= `echo "#{@text}" | hunspell -a`
     end
 
     def line_feedback
-      output.sub(/.*\n/, '').split("\n\n")
+      without_version_info = output.sub /.*\n/, ''
+      # remove trailing newlines when they are followed by another newline
+      without_trailing_newlines = without_version_info.gsub /(\w)\n(\n)/, '\1\2'
+      without_trailing_newlines.split "\n"
     end
 
     def misspellings
