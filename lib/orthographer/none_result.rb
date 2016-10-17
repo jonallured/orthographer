@@ -1,9 +1,5 @@
 module Orthographer
   class NoneResult < Result
-    def to_s
-      "(#{@line}, #{offset}) #{original}"
-    end
-
     private
 
     def splitted_feedback

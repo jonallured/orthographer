@@ -1,7 +1,7 @@
 module Orthographer
   class MissResult < Result
     def to_s
-      "(#{@line}, #{offset}) #{original}: #{options}"
+      "#{super.to_s}: #{suggestions}"
     end
 
     private
@@ -18,7 +18,7 @@ module Orthographer
       splitted_feedback[1]
     end
 
-    def options
+    def suggestions
       @feedback.split(': ').last
     end
   end
