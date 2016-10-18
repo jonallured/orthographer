@@ -1,11 +1,11 @@
 module Orthographer
   class Checker
-    def self.check(text)
-      new(text).check
+    def self.check(filename)
+      new(filename).check
     end
 
-    def initialize(text)
-      @text = text
+    def initialize(filename)
+      @filename = filename
     end
 
     def check
@@ -15,7 +15,7 @@ module Orthographer
     private
 
     def output
-      @output ||= `echo "#{@text}" | hunspell -a`
+      @output ||= `cat #{@filename} | hunspell -a`
     end
 
     def line_feedback

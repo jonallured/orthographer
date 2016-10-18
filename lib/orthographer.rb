@@ -5,7 +5,11 @@ require "orthographer/checker"
 require "orthographer/version"
 
 module Orthographer
-  def self.check(text)
-    Checker.check(text)
+  class NoFilesFound < StandardError; end
+
+  def self.check(pattern)
+    files = Dir.glob(pattern)
+    raise NoFilesFound unless files.any?
+    files.map &Checker.method(:check)
   end
 end
