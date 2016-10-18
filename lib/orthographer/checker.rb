@@ -13,16 +13,11 @@ module Orthographer
       results = []
 
       for output_line in output_lines
-        if output_line.miss?
-          results << MissResult.new(output_line.text, @line)
-        elsif output_line.none?
-          results << NoneResult.new(output_line.text, @line)
-        elsif output_line.empty?
-          @line += 1
-        end
+        results << output_line.result_for(@line)
+        @line += 1 if output_line.empty?
       end
 
-      results
+      results.compact
     end
 
     private
@@ -37,22 +32,38 @@ module Orthographer
   end
 
   class OutputLine
-    attr_accessor :text
-
     def initialize(text)
       @text = text
     end
 
-    def miss?
-      text[0] == '&'
-    end
-
-    def none?
-      text[0] == '#'
+    def result_for(line)
+      return nil unless result?
+      result_klass.new @text, line
     end
 
     def empty?
-      text == ''
+      @text == ''
+    end
+
+    private
+
+    def result?
+      !!result_klass
+    end
+
+    def result_klass
+      mapping[sign]
+    end
+
+    def mapping
+      {
+        '&' => MissResult,
+        '#' => NoneResult
+      }
+    end
+
+    def sign
+      @text[0]
     end
   end
 end
