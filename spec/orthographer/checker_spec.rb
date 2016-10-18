@@ -23,7 +23,7 @@ module Orthographer
 
         context 'without suggestions' do
           it 'returns a NoneResult for that word' do
-            text = 'qqxxqqxxqqxxqqxxqq'
+            text = 'qqxxqqxxqqxxqqxxqqqqxxqqxxqqxxqqxxqq'
             misspellings = Checker.check(text)
             expect(misspellings.count).to eq 1
             expect(misspellings.first).to be_a NoneResult
@@ -33,7 +33,7 @@ module Orthographer
 
       context 'with a really weird sentence' do
         it 'returns only the words not found' do
-          text = 'Wow, rong qqxxqqxxqqxxqqxxqq I guess!'
+          text = 'Wow, rong qqxxqqxxqqxxqqxxqqqqxxqqxxqqxxqqxxqq I guess!'
           misspellings = Checker.check(text)
           expect(misspellings.count).to eq 2
         end
