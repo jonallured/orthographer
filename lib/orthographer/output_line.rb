@@ -20,10 +20,10 @@ module Orthographer
     end
 
     def result_klass
-      mapping[sign]
+      sign_result_map[sign]
     end
 
-    def mapping
+    def sign_result_map
       {
         '&' => MissResult,
         '#' => NoneResult
