@@ -6,10 +6,23 @@ module Orthographer
 
     def initialize(filename)
       @filename = filename
+      @line = 1
     end
 
     def check
-      misspellings.flatten.compact
+      results = []
+
+      for output_line in output_lines
+        if output_line.miss?
+          results << MissResult.new(output_line.text, @line)
+        elsif output_line.none?
+          results << NoneResult.new(output_line.text, @line)
+        elsif output_line.empty?
+          @line += 1
+        end
+      end
+
+      results
     end
 
     private
@@ -18,24 +31,28 @@ module Orthographer
       @output ||= `cat #{@filename} | hunspell -a`
     end
 
-    def line_feedback
-      without_version_info = output.sub /.*\n/, ''
-      # remove trailing newlines when they are followed by another newline
-      without_trailing_newlines = without_version_info.gsub /(\w)\n(\n)/, '\1\2'
-      without_trailing_newlines.split "\n"
+    def output_lines
+      output.split("\n").map &OutputLine.method(:new)
+    end
+  end
+
+  class OutputLine
+    attr_accessor :text
+
+    def initialize(text)
+      @text = text
     end
 
-    def misspellings
-      line_feedback.map.with_index do |feedback, index|
-        word_feedback = feedback.split("\n")
-        word_feedback.map do |word|
-          if word[0] == "&"
-            MissResult.new(word, index + 1)
-          elsif word[0] == "#"
-            NoneResult.new(word, index + 1)
-          end
-        end
-      end
+    def miss?
+      text[0] == '&'
+    end
+
+    def none?
+      text[0] == '#'
+    end
+
+    def empty?
+      text == ''
     end
   end
 end

@@ -31,11 +31,29 @@ module Orthographer
         end
       end
 
+      context 'with a sentence' do
+        it 'returns the right coordinates' do
+          filename = 'spec/fixtures/sentence.txt'
+          results = Checker.check(filename)
+          expect(results.first.coordinates).to eq '(1, 34)'
+        end
+      end
+
       context 'with a really weird sentence' do
         it 'returns only the words not found' do
           filename = 'spec/fixtures/weird_sentence.txt'
           results = Checker.check(filename)
           expect(results.count).to eq 2
+        end
+      end
+
+      context 'with two paragraphs' do
+        it 'returns the right coordinates' do
+          filename = 'spec/fixtures/two_paragraphs.txt'
+          results = Checker.check(filename)
+          first, last = *results
+          expect(first.coordinates).to eq '(1, 18)'
+          expect(last.coordinates).to eq '(3, 11)'
         end
       end
 
