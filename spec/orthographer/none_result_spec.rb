@@ -7,7 +7,7 @@ module Orthographer
         feedback = '# qqxxqqxxqqxxqqxxqq 0'
         line = 1
         result = NoneResult.new(feedback, line)
-        expect(result.to_s).to eq '(1, 0) qqxxqqxxqqxxqqxxqq'
+        expect(result.to_s).to eq '(1, 1) qqxxqqxxqqxxqqxxqq'
       end
     end
   end

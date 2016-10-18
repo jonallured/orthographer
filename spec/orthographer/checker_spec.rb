@@ -35,7 +35,7 @@ module Orthographer
         it 'returns the right coordinates' do
           filename = 'spec/fixtures/sentence.txt'
           results = Checker.check(filename)
-          expect(results.first.coordinates).to eq '(1, 34)'
+          expect(results.first.coordinates).to eq '(1, 35)'
         end
       end
 
@@ -52,8 +52,8 @@ module Orthographer
           filename = 'spec/fixtures/two_paragraphs.txt'
           results = Checker.check(filename)
           first, last = *results
-          expect(first.coordinates).to eq '(1, 18)'
-          expect(last.coordinates).to eq '(3, 11)'
+          expect(first.coordinates).to eq '(1, 19)'
+          expect(last.coordinates).to eq '(3, 12)'
         end
       end
 
@@ -62,8 +62,8 @@ module Orthographer
           filename = 'spec/fixtures/no_empties.txt'
           results = Checker.check(filename)
           first, last = *results
-          expect(first.coordinates).to eq '(1, 0)'
-          expect(last.coordinates).to eq '(2, 0)'
+          expect(first.coordinates).to eq '(1, 1)'
+          expect(last.coordinates).to eq '(2, 1)'
         end
       end
 
@@ -72,8 +72,8 @@ module Orthographer
           filename = 'spec/fixtures/one_empty.txt'
           results = Checker.check(filename)
           first, last = *results
-          expect(first.coordinates).to eq '(1, 0)'
-          expect(last.coordinates).to eq '(3, 0)'
+          expect(first.coordinates).to eq '(1, 1)'
+          expect(last.coordinates).to eq '(3, 1)'
         end
       end
 
@@ -82,8 +82,8 @@ module Orthographer
           filename = 'spec/fixtures/two_empties.txt'
           results = Checker.check(filename)
           first, last = *results
-          expect(first.coordinates).to eq '(1, 0)'
-          expect(last.coordinates).to eq '(4, 0)'
+          expect(first.coordinates).to eq '(1, 1)'
+          expect(last.coordinates).to eq '(4, 1)'
         end
       end
 
@@ -92,8 +92,8 @@ module Orthographer
           filename = 'spec/fixtures/ten_empties.txt'
           results = Checker.check(filename)
           first, last = *results
-          expect(first.coordinates).to eq '(1, 0)'
-          expect(last.coordinates).to eq '(11, 0)'
+          expect(first.coordinates).to eq '(1, 1)'
+          expect(last.coordinates).to eq '(11, 1)'
         end
       end
     end

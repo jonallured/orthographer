@@ -10,7 +10,7 @@ module Orthographer
     end
 
     def coordinates
-      "(#{@line}, #{offset})"
+      "(#{@line}, #{offset.to_i + 1})"
     end
 
     private
