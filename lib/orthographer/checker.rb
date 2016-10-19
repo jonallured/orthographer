@@ -23,11 +23,26 @@ module Orthographer
     private
 
     def output
-      @output ||= `#{cat_cmd} | #{sed_cmd} | #{ruby_cmd} | #{hunspell_cmd}`
+      @output ||= `#{commands.join(' | ')}`
+    end
+
+    def commands
+      [
+        cat_cmd,
+        first_ruby_cmd,
+        sed_cmd,
+        ruby_cmd,
+        hunspell_cmd
+      ]
     end
 
     def cat_cmd
       "cat #{@filename}"
+    end
+
+    def first_ruby_cmd
+      # turn code blocks into empty lines
+      %q|ruby -e 'puts gets(nil).gsub(/```.*```\n/m) { "\n" * $~.to_s.split("\n").count }'|
     end
 
     def sed_cmd

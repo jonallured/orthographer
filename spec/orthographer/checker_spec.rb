@@ -107,6 +107,13 @@ module Orthographer
           expect(results.first.coordinates).to eq '(1, 36)'
         end
       end
+
+      context 'with code blocks' do
+        it 'returns correct coordinates' do
+          results = Checker.check fixtures_path('code_blocks.txt')
+          expect(results.first.coordinates).to eq '(7, 18)'
+        end
+      end
     end
   end
 end
