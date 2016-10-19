@@ -23,7 +23,20 @@ module Orthographer
     private
 
     def output
-      @output ||= `cat #{@filename} | hunspell -a`
+      @output ||= `#{cat_cmd} | #{sed_cmd} | #{hunspell_cmd}`
+    end
+
+    def cat_cmd
+      "cat #{@filename}"
+    end
+
+    def sed_cmd
+      # turn lines of special characters into blank lines
+      "sed -E 's/^[^[:alnum:]]*$//g'"
+    end
+
+    def hunspell_cmd
+      'hunspell -a'
     end
 
     def output_lines

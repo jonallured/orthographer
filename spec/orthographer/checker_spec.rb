@@ -86,6 +86,21 @@ module Orthographer
           expect(last.coordinates).to eq '(11, 1)'
         end
       end
+
+      context 'with lines of special characters' do
+        it 'returns correct coordinates' do
+          results = Checker.check fixtures_path('special_characters.txt')
+          expect(results.first.coordinates).to eq '(3, 18)'
+        end
+      end
+
+      context 'with empty lines at top' do
+        it 'returns correct coordinates' do
+
+          results = Checker.check fixtures_path('empty_lines_at_top.txt')
+          expect(results.first.coordinates).to eq '(4, 20)'
+        end
+      end
     end
   end
 end
