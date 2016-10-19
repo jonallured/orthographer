@@ -28,34 +28,31 @@ module Orthographer
 
     def commands
       [
-        cat_cmd,
-        first_ruby_cmd,
-        sed_cmd,
-        ruby_cmd,
-        hunspell_cmd
+        cat_file,
+        remove_code_blocks,
+        remove_special_character_lines,
+        mask_inline_code,
+        check_spelling
       ]
     end
 
-    def cat_cmd
+    def cat_file
       "cat #{@filename}"
     end
 
-    def first_ruby_cmd
-      # turn code blocks into empty lines
+    def remove_code_blocks
       %q|ruby -e 'puts gets(nil).gsub(/```.*```\n/m) { "\n" * $~.to_s.split("\n").count }'|
     end
 
-    def sed_cmd
-      # turn lines of special characters into blank lines
+    def remove_special_character_lines
       "sed 's/^[^[:alnum:]]*$//g'"
     end
 
-    def ruby_cmd
-      # find inline code and replace the word with 1s
+    def mask_inline_code
       %q|ruby -pne '$_.gsub!(/`([^`]*)`/) { "`#{?1 * $~[1].length}`" }'|
     end
 
-    def hunspell_cmd
+    def check_spelling
       'hunspell -a'
     end
 
