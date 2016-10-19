@@ -114,6 +114,13 @@ module Orthographer
           expect(results.first.coordinates).to eq '(7, 18)'
         end
       end
+
+      context 'with a personal dictionary' do
+        it 'ignores words in that dictionary' do
+          results = Checker.check fixtures_path('jargon.txt'), personal_dict: 'spec/dictionaries/jargon.dic'
+          expect(results.count).to eq 0
+        end
+      end
     end
   end
 end

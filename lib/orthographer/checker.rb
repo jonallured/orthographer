@@ -1,11 +1,12 @@
 module Orthographer
   class Checker
-    def self.check(filename)
-      new(filename).check
+    def self.check(filename, personal_dict: nil)
+      new(filename, personal_dict: personal_dict).check
     end
 
-    def initialize(filename)
+    def initialize(filename, personal_dict: nil)
       @filename = filename
+      @personal_dict = personal_dict
       @line = 1
     end
 
@@ -53,7 +54,9 @@ module Orthographer
     end
 
     def check_spelling
-      'hunspell -a'
+      command = 'hunspell -a'
+      command << " -p #{@personal_dict}" if @personal_dict
+      command
     end
 
     def output_lines

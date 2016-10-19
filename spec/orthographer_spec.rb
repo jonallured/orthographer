@@ -31,5 +31,20 @@ describe Orthographer do
         end.to raise_error Orthographer::NoFilesFound
       end
     end
+
+    context 'with a personal dictionary' do
+      it 'ignores words in that dictionary' do
+        results = Orthographer.check fixtures_path('jargon.txt'), personal_dict: 'spec/dictionaries/jargon.dic'
+        expect(results.first.count).to eq 0
+      end
+    end
+
+    context 'with a bad personal dictionary' do
+      it 'raises an error' do
+        expect do
+          Orthographer.check fixtures_path('jargon.txt'), personal_dict: 'spec/bad.dic'
+        end.to raise_error Orthographer::DictionaryNotFound
+      end
+    end
   end
 end
