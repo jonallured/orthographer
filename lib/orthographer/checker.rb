@@ -32,7 +32,7 @@ module Orthographer
 
     def sed_cmd
       # turn lines of special characters into blank lines
-      "sed -E 's/^[^[:alnum:]]*$//g'"
+      "sed 's/^[^[:alnum:]]*$//g'"
     end
 
     def hunspell_cmd
