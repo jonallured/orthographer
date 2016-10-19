@@ -5,8 +5,7 @@ module Orthographer
     describe '.check' do
       context 'with a word found in the dictionary' do
         it 'returns an empty array' do
-          filename = 'spec/fixtures/correct.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('correct.txt')
           expect(results.count).to eq 0
         end
       end
@@ -14,8 +13,7 @@ module Orthographer
       context 'with a word not found in the dictionary' do
         context 'with suggestions' do
           it 'returns a MissResult for that word' do
-            filename = 'spec/fixtures/rong.txt'
-            results = Checker.check(filename)
+            results = Checker.check fixtures_path('rong.txt')
             expect(results.count).to eq 1
             expect(results.first).to be_a MissResult
           end
@@ -23,8 +21,7 @@ module Orthographer
 
         context 'without suggestions' do
           it 'returns a NoneResult for that word' do
-            filename = 'spec/fixtures/no_suggestions.txt'
-            results = Checker.check(filename)
+            results = Checker.check fixtures_path('no_suggestions.txt')
             expect(results.count).to eq 1
             expect(results.first).to be_a NoneResult
           end
@@ -33,24 +30,21 @@ module Orthographer
 
       context 'with a sentence' do
         it 'returns the right coordinates' do
-          filename = 'spec/fixtures/sentence.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('sentence.txt')
           expect(results.first.coordinates).to eq '(1, 35)'
         end
       end
 
       context 'with a really weird sentence' do
         it 'returns only the words not found' do
-          filename = 'spec/fixtures/weird_sentence.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('weird_sentence.txt')
           expect(results.count).to eq 2
         end
       end
 
       context 'with two paragraphs' do
         it 'returns the right coordinates' do
-          filename = 'spec/fixtures/two_paragraphs.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('two_paragraphs.txt')
           first, last = *results
           expect(first.coordinates).to eq '(1, 19)'
           expect(last.coordinates).to eq '(3, 12)'
@@ -59,8 +53,7 @@ module Orthographer
 
       context 'with no empty lines' do
         it 'returns correct coordinates' do
-          filename = 'spec/fixtures/no_empties.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('no_empties.txt')
           first, last = *results
           expect(first.coordinates).to eq '(1, 1)'
           expect(last.coordinates).to eq '(2, 1)'
@@ -69,8 +62,7 @@ module Orthographer
 
       context 'with one empty lines' do
         it 'returns correct coordinates' do
-          filename = 'spec/fixtures/one_empty.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('one_empty.txt')
           first, last = *results
           expect(first.coordinates).to eq '(1, 1)'
           expect(last.coordinates).to eq '(3, 1)'
@@ -79,8 +71,7 @@ module Orthographer
 
       context 'with two empty lines' do
         it 'returns correct coordinates' do
-          filename = 'spec/fixtures/two_empties.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('two_empties.txt')
           first, last = *results
           expect(first.coordinates).to eq '(1, 1)'
           expect(last.coordinates).to eq '(4, 1)'
@@ -89,8 +80,7 @@ module Orthographer
 
       context 'with 10 empty lines' do
         it 'returns correct coordinates' do
-          filename = 'spec/fixtures/ten_empties.txt'
-          results = Checker.check(filename)
+          results = Checker.check fixtures_path('ten_empties.txt')
           first, last = *results
           expect(first.coordinates).to eq '(1, 1)'
           expect(last.coordinates).to eq '(11, 1)'
