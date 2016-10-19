@@ -23,7 +23,7 @@ module Orthographer
     private
 
     def output
-      @output ||= `#{cat_cmd} | #{sed_cmd} | #{hunspell_cmd}`
+      @output ||= `#{cat_cmd} | #{sed_cmd} | #{ruby_cmd} | #{hunspell_cmd}`
     end
 
     def cat_cmd
@@ -33,6 +33,11 @@ module Orthographer
     def sed_cmd
       # turn lines of special characters into blank lines
       "sed 's/^[^[:alnum:]]*$//g'"
+    end
+
+    def ruby_cmd
+      # find inline code and replace the word with 1s
+      %q|ruby -pne '$_.gsub!(/`([^`]*)`/) { "`#{?1 * $~[1].length}`" }'|
     end
 
     def hunspell_cmd

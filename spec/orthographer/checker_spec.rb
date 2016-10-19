@@ -96,9 +96,15 @@ module Orthographer
 
       context 'with empty lines at top' do
         it 'returns correct coordinates' do
-
           results = Checker.check fixtures_path('empty_lines_at_top.txt')
           expect(results.first.coordinates).to eq '(4, 20)'
+        end
+      end
+
+      context 'with inline code' do
+        it 'returns correct coordinates' do
+          results = Checker.check fixtures_path('inline_code.txt')
+          expect(results.first.coordinates).to eq '(1, 36)'
         end
       end
     end
